@@ -46,11 +46,18 @@ In production, you need to add media directory in you web server.
 ### Develop
 To service the uploaded files need a helper function, where ``/media/`` your settings ``app.config['MEDIA_URL']``:
 
-    from flask import send_from_directory
+    @app.route("/upload", methods=['POST'])
+    async def omo(request):
+        from sanic import response
+        import os
+        import aiofiles
+        if not os.path.exists(app.config['MEDIA_URL']):
+            os.makedirs(app.config['MEDIA_URL'])
+        async with aiofiles.open(app.config['MEDIA_URL']+"/"+request.files["file"][0].name, 'wb') as f:
+            await f.write(request.files["file"][0].body)
+        f.close()
 
-    @app.route('/media/<regex("([\w\d_/-]+)?.(?:jpe?g|gif|png)"):filename>')
-    def media_file(filename):
-        return send_from_directory(app.config['MEDIA_THUMBNAIL_FOLDER'], filename)
+        return response.json(True)
 
 
 Option settings
