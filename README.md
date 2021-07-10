@@ -8,7 +8,7 @@ Installation
 ===============
 Install with ``pip``:
 
-Run ``pip install git+https://github.com/SilentSokolov/flask-thumbnails.git``
+Run ``pip install git+https://github.com/q8977452/sanic-thumbnails.git``
 
 Add ``Thumbnail`` to your extension file:
     from sanic.ext.thumbnails import Thumbnail
